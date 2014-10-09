@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D6586303-1CAE-49F4-BC11-3CF29F12DBF4</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ABMenu3</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>8395F31126F15B90AF204A19F2F0BCB9A3FDAAE1</key>
+		<string>https://github.com/dblyth/ABMenu.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ABMenu3.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>8395F31126F15B90AF204A19F2F0BCB9A3FDAAE1</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/dblyth/ABMenu.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>8395F31126F15B90AF204A19F2F0BCB9A3FDAAE1</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8395F31126F15B90AF204A19F2F0BCB9A3FDAAE1</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ABMenu</string>
+		</dict>
+	</array>
+</dict>
+</plist>
