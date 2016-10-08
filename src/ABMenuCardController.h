@@ -58,6 +58,7 @@
 -(BOOL)isIMProperty:(NSString *)type;
 -(ABPerson *)representedPerson;
 -(void)addMultiValueProperty:(NSString *)property;
+-(BOOL)isInstantMessageTypeActionSupported:(NSString *)imType;
 
 -(void)closeCardIfNecessary;
 
@@ -70,4 +71,8 @@
 -(IBAction)instantMessage:(id)sender;
 -(IBAction)noteDisclosureClick:(id)sender;
 
+@end
+
+@interface ABMenuCardController (ContextualPopupMenu)
+-(NSMenu *)tableView:(NSTableView *)aTableView menuForTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex;
 @end

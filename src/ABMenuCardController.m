@@ -199,7 +199,7 @@ static NSImage *chatImage;
     BOOL rowSelected = (row != -1);
     
     NSString *type = [[propertyArray objectAtIndex:row] valueForKey:kTypeDictKey];
-    NSString *value = [[propertyArray objectAtIndex:row] valueForKey:kValueDictKey];
+    NSString *value = [[[propertyArray objectAtIndex:row] valueForKey:kValueDictKey] valueForKey:kABInstantMessageServiceKey];
     
     // If an address row is selected, use a mapping service
     if (rowSelected && [self isIMProperty:type])
@@ -207,19 +207,19 @@ static NSImage *chatImage;
         NSString* url = nil;
         
         // Depends on type
-        if ([type isEqualToString:kABAIMInstantProperty])
+        if ([type isEqualToString:kABInstantMessageServiceAIM])
         {
             url = [NSString stringWithFormat:@"aim:goim?screenname=%@", value];
         }
-        else if ([type isEqualToString:kABJabberInstantProperty])
+        else if ([type isEqualToString:kABInstantMessageServiceJabber])
         {
             url = [NSString stringWithFormat:@"xmpp:user%@?message", value];
         }
-        else if ([type isEqualToString:kABMSNInstantProperty])
+        else if ([type isEqualToString:kABInstantMessageServiceMSN])
         {
             url = [NSString stringWithFormat:@"msn:chat?contact=%@", value];
         }
-        else if ([type isEqualToString:kABYahooInstantProperty])
+        else if ([type isEqualToString:kABInstantMessageServiceYahoo])
         {
             url = [NSString stringWithFormat:@"ymsgr:sendim?%@", value];
         }
@@ -358,7 +358,13 @@ static NSImage *chatImage;
 {
     int row = [infoList selectedRow];
     BOOL rowSelected = (row != -1);
-        
+    
+    NSString* typeValue;
+    if (rowSelected)
+    {
+        typeValue = [[propertyArray objectAtIndex:row] valueForKey:kTypeDictKey];
+    }
+    
     // 'Edit Card' always enabled
     [[actionMenu itemAtIndex:kABEditCardMenuItem] setEnabled:YES];
     
@@ -366,14 +372,20 @@ static NSImage *chatImage;
     [[actionMenu itemAtIndex:kABCopyMenuItem] setEnabled:rowSelected];
     
     // The rest are enabled depending on the type of the selection
-    [[actionMenu itemAtIndex:kABSendEmailMenuItem] setEnabled:(rowSelected && [[[propertyArray objectAtIndex:row] valueForKey:kTypeDictKey] isEqualToString:kABEmailProperty])];
-    [[actionMenu itemAtIndex:kABGoToLocationMenuItem] setEnabled:(rowSelected && [[[propertyArray objectAtIndex:row] valueForKey:kTypeDictKey] isEqualToString:kABURLsProperty])];
-    [[actionMenu itemAtIndex:kABMapAddressMenuItem] setEnabled:(rowSelected && [[[propertyArray objectAtIndex:row] valueForKey:kTypeDictKey] isEqualToString:kABAddressProperty])];
-    [[actionMenu itemAtIndex:kABSendInstantMessageMenuItem] setEnabled:(rowSelected && [self isIMProperty:[[propertyArray objectAtIndex:row] valueForKey:kTypeDictKey]])];
+    [[actionMenu itemAtIndex:kABSendEmailMenuItem] setEnabled:(rowSelected && [typeValue isEqualToString:kABEmailProperty])];
+    [[actionMenu itemAtIndex:kABGoToLocationMenuItem] setEnabled:(rowSelected && [typeValue isEqualToString:kABURLsProperty])];
+    [[actionMenu itemAtIndex:kABMapAddressMenuItem] setEnabled:(rowSelected && [typeValue isEqualToString:kABAddressProperty])];
     
-    // Since there is no way to handle ICQ messaging, disable the instant message item if an ICQ handle is selected
-    if (rowSelected && [[[propertyArray objectAtIndex:row] valueForKey:kTypeDictKey] isEqualToString:kABICQInstantProperty])
+    // Since there is no way to some types of messengers, disable the instant message item depending on the type
+    if (rowSelected && [self isIMProperty:typeValue])
+    {
+        NSString* imType = [[[propertyArray objectAtIndex:row] valueForKey:kValueDictKey] valueForKey:kABInstantMessageServiceKey];
+        [[actionMenu itemAtIndex:kABSendInstantMessageMenuItem] setEnabled:[self isInstantMessageTypeActionSupported:imType]];
+    }
+    else
+    {
         [[actionMenu itemAtIndex:kABSendInstantMessageMenuItem] setEnabled:NO];
+    }
 }
 
 -(void)clearProperties
@@ -383,16 +395,15 @@ static NSImage *chatImage;
 
 -(BOOL)isIMProperty:(NSString *)type {
     
-    if ([type isEqualToString:kABAIMInstantProperty] ||
-        [type isEqualToString:kABJabberInstantProperty] ||
-        [type isEqualToString:kABMSNInstantProperty] ||
-        [type isEqualToString:kABYahooInstantProperty] ||
-        [type isEqualToString:kABICQInstantProperty])
-    {
-        return YES;
-    }
-    
-    return NO;
+    return [type isEqualToString:kABInstantMessageProperty];
+}
+
+-(BOOL)isInstantMessageTypeActionSupported:(NSString *)imType
+{
+    return [imType isEqualToString:kABInstantMessageServiceAIM] ||
+           [imType isEqualToString:kABInstantMessageServiceJabber] ||
+           [imType isEqualToString:kABInstantMessageServiceMSN] ||
+           [imType isEqualToString:kABInstantMessageServiceYahoo];
 }
 
 -(void)addPropertiesToTable
@@ -418,12 +429,8 @@ static NSImage *chatImage;
                                   nil]];
     }
     
-    // Instant messaging    
-    [self addMultiValueProperty:kABAIMInstantProperty];
-    [self addMultiValueProperty:kABJabberInstantProperty];
-    [self addMultiValueProperty:kABMSNInstantProperty];
-    [self addMultiValueProperty:kABYahooInstantProperty];
-    [self addMultiValueProperty:kABICQInstantProperty];
+    // Instant messaging
+    [self addMultiValueProperty:kABInstantMessageProperty];
     
     // Notes
     NSString* noteString = [representedPerson valueForProperty:kABNoteProperty];
@@ -563,15 +570,18 @@ static NSImage *chatImage;
             return phoneImage;
         else if ([[[propertyArray objectAtIndex:rowIndex] valueForKey:kTypeDictKey] isEqualToString:kABEmailProperty])
             return emailImage;
-        else if ([self isIMProperty:[[propertyArray objectAtIndex:rowIndex] valueForKey:kTypeDictKey]])
+        else if ([[[propertyArray objectAtIndex:rowIndex] valueForKey:kTypeDictKey] isEqualToString:
+            kABInstantMessageProperty])
             return chatImage;
         else
             return nil;
     }
     else if (([[column identifier] isEqualToString:kValueDictKey]) && ([self isIMProperty:[[propertyArray objectAtIndex:rowIndex] valueForKey:kTypeDictKey]]))
     {
+        NSDictionary* imDict = (NSDictionary*)[[propertyArray objectAtIndex:rowIndex] valueForKey:kValueDictKey];
+        
         // Append the IM type after the IM handle
-        return [NSString stringWithFormat:@"%@ (%@)", [[propertyArray objectAtIndex:rowIndex] valueForKey:kValueDictKey], [self scanIMType:[[propertyArray objectAtIndex:rowIndex] valueForKey:kTypeDictKey]]];
+        return [NSString stringWithFormat:@"%@ (%@)", [imDict valueForKey:kABInstantMessageUsernameKey], [self scanIMType:[imDict valueForKey:kABInstantMessageServiceKey]]];
     }
     else
         return [infoDict objectForKey:[column identifier]];

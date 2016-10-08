@@ -9,8 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import <AddressBook/ABAddressBook.h>
 #import <AddressBook/ABPeoplePickerView.h>
-//#import <IOBluetooth/OBEX.h>
-//#import <IOBluetooth/objc/IOBluetoothDevice.h>
 #import "ABMenuBonjourController.h"
 
 #define kABUseHUDCardInterface @"ABUseHUDCardInterface"
@@ -35,9 +33,7 @@
 #define kABDecimalGroupTag (-1)
 #define kABOtherGroupTag   (-2)
 
-//#define kABCallPhoneNumberNotification @"ABCallPhoneNumber"
-
-@interface ABMenuController : NSObject
+@interface ABMenuController : NSObject <NSApplicationDelegate>
 {
     ABAddressBook* addressBook;
     NSStatusItem* statusItem;

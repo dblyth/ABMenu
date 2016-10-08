@@ -14,11 +14,11 @@
 		<string>https://github.com/dblyth/ABMenu.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ABMenu3.xcodeproj</string>
+	<string>src/ABMenu3.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>8395F31126F15B90AF204A19F2F0BCB9A3FDAAE1</key>
-		<string>../..</string>
+		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/dblyth/ABMenu.git</string>

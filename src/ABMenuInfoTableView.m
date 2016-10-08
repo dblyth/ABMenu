@@ -7,6 +7,7 @@
 //
 
 #import "ABMenuInfoTableView.h"
+#import "ABMenuCardController.h"
 
 @implementation ABMenuInfoTableView
 
@@ -39,14 +40,8 @@
             [self selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
 		}
 				
-		if ([[self dataSource] respondsToSelector:@selector(tableView:menuForTableColumn:row:)])
-		{
-			return [[self dataSource] tableView:self menuForTableColumn:column row:row];
-		}
-		else
-		{
-			return [self menu];
-		}
+        
+        return [(ABMenuCardController*)[self dataSource] tableView:self menuForTableColumn: column row:row];
 	}
 
 	[self deselectAll:nil];
@@ -64,7 +59,6 @@
         [self setBackgroundColor:[NSColor blackColor]];
         [self setGridStyleMask:NSTableViewSolidHorizontalGridLineMask];
         [self setGridColor:[NSColor whiteColor]];
-        //[(NSScrollView*)[[self subviews] objectAtIndex:0] setBorderType:
     }
     else
     {

@@ -8,10 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface NSTableView (ContextualPopupMenu)
--(NSMenu *)tableView:(NSTableView *)aTableView menuForTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex;
-@end
-
 @interface ABMenuInfoTableView : NSTableView
 {
 	BOOL hudStyle;

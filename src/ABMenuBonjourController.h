@@ -14,7 +14,8 @@
 #define kABBonjourDisplayName @"ABBonjourDisplayName"
 
 
-@interface ABMenuBonjourController : NSObject {
+@interface ABMenuBonjourController : NSObject<NSNetServiceDelegate, NSNetServiceBrowserDelegate, NSStreamDelegate>
+{
 
     // Broadcasting
     NSNetService *netService;

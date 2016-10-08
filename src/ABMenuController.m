@@ -408,7 +408,7 @@
             if ([[NSUserDefaults standardUserDefaults] boolForKey:kABSortIntoAlphabeticalSubMenus])
             {
                 // Get the first character
-                int indexChar = toupper([[[person sortName] decomposedStringWithCanonicalMapping] characterAtIndex:0]);
+                unichar indexChar = toupper([[[person sortName] decomposedStringWithCanonicalMapping] characterAtIndex:0]);
                 
                 // Check if the person belongs in the "0-9" menu item
                 if ([[NSCharacterSet decimalDigitCharacterSet] characterIsMember:indexChar])
