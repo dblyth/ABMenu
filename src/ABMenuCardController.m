@@ -110,7 +110,7 @@ static NSImage *chatImage;
 
 -(void)doubleClick:(id)sender
 {
-    int row = [infoList selectedRow];
+    NSInteger row = [infoList selectedRow];
     BOOL rowSelected = (row != -1);
     
     if (rowSelected)
@@ -134,7 +134,7 @@ static NSImage *chatImage;
 
 -(IBAction)sendEmail:(id)sender
 {
-    int row = [infoList selectedRow];
+    NSInteger row = [infoList selectedRow];
     BOOL rowSelected = (row != -1);
     
     // If an email row is selected, go to a mailto:// url
@@ -149,7 +149,7 @@ static NSImage *chatImage;
 
 -(IBAction)goToLocation:(id)sender
 {
-    int row = [infoList selectedRow];
+    NSInteger row = [infoList selectedRow];
     BOOL rowSelected = (row != -1);
     
     // If a URL property is selected, go to the url
@@ -163,7 +163,7 @@ static NSImage *chatImage;
 
 -(IBAction)mapAddress:(id)sender
 {
-    int row = [infoList selectedRow];
+    NSInteger row = [infoList selectedRow];
     BOOL rowSelected = (row != -1);
     
     // If an address row is selected, use a mapping service
@@ -187,7 +187,10 @@ static NSImage *chatImage;
         }
         
         if (url)
-            [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+        {
+            [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]]];
+    
+        }
     }
     
     [self closeCardIfNecessary];
@@ -195,7 +198,7 @@ static NSImage *chatImage;
 
 -(IBAction)instantMessage:(id)sender
 {    
-    int row = [infoList selectedRow];
+    NSInteger row = [infoList selectedRow];
     BOOL rowSelected = (row != -1);
     
     NSString *type = [[propertyArray objectAtIndex:row] valueForKey:kTypeDictKey];
@@ -226,7 +229,7 @@ static NSImage *chatImage;
         
         if (url)
         {
-            [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]];
+            [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]]];
         }
     }
     
@@ -236,7 +239,7 @@ static NSImage *chatImage;
 -(IBAction)copy:(id)sender
 {
 	NSPasteboard *pb = [NSPasteboard generalPasteboard];
-	int row = [infoList selectedRow];
+	NSInteger row = [infoList selectedRow];
 	
 	NSDictionary *selection = [propertyArray objectAtIndex:row];
 	
@@ -356,7 +359,7 @@ static NSImage *chatImage;
 
 -(void)validateActionMenu
 {
-    int row = [infoList selectedRow];
+    NSInteger row = [infoList selectedRow];
     BOOL rowSelected = (row != -1);
     
     NSString* typeValue;
@@ -550,7 +553,7 @@ static NSImage *chatImage;
 #pragma mark -
 #pragma mark *** NSTableView Delegate ***
 
-- (int)numberOfRowsInTableView:(NSTableView *)aTableView
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
 	return [propertyArray count];
 }
@@ -601,7 +604,7 @@ static NSImage *chatImage;
     }
 }
 
--(NSMenu *)tableView:(NSTableView *)aTableView menuForTableColumn:(NSTableColumn *)column row:(int)rowIndex
+-(NSMenu *)tableView:(NSTableView *)aTableView menuForTableColumn:(NSTableColumn *)column row:(NSInteger)rowIndex
 {
     // Update the action menu in case we hit this method before tableViewSelectionDidChange
 	[self validateActionMenu];

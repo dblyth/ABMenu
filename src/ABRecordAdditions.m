@@ -194,10 +194,10 @@
 // Returns kABFirstNameFirst or kABLastNameFirst.
 // Need to check if the record has the default ordering overridden.
 //
--(int)nameOrdering
+-(NSInteger)nameOrdering
 {
-    int defaultOrder = [[ABAddressBook sharedAddressBook] defaultNameOrdering];
-    int recordOrder = [[self valueForProperty:kABPersonFlags] intValue] & kABNameOrderingMask;
+    NSInteger defaultOrder = [[ABAddressBook sharedAddressBook] defaultNameOrdering];
+    NSInteger recordOrder = [[self valueForProperty:kABPersonFlags] intValue] & kABNameOrderingMask;
     
     return (recordOrder != kABDefaultNameOrdering) ? recordOrder : defaultOrder;
 }

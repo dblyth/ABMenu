@@ -15,8 +15,8 @@
 -(NSMenu *)menuForEvent:(NSEvent *)theEvent
 {
 	NSPoint where;
-	int row = -1;
-	int col = -1;
+	NSInteger row = -1;
+	NSInteger col = -1;
 	
 	where = [self convertPoint:[theEvent locationInWindow] fromView:nil];
 	row = [self rowAtPoint:where];

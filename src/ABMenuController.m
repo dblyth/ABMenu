@@ -242,7 +242,7 @@
 
 -(void)addRecentContact:(ABPerson *)contact
 {
-    int maxRecentContacts = [[NSUserDefaults standardUserDefaults] integerForKey:kABNumRecentContacts];
+    NSInteger maxRecentContacts = [[NSUserDefaults standardUserDefaults] integerForKey:kABNumRecentContacts];
     
     //
     // If the user doesn't want to store recent contacts, we are done here.
@@ -253,7 +253,7 @@
     
     //
     // The user does want to store them, so we have work to do.
-    int i;
+    NSInteger i;
     NSEnumerator *enumerator = [[recentMenu itemArray] objectEnumerator]; 
     NSMenuItem *item;
         
@@ -269,7 +269,9 @@
     if (contact != NULL)
     {
         if ([recentContacts containsObject:contact])
+        {
             [recentContacts removeObject:contact];
+        }
         
         [recentContacts insertObject:contact atIndex:0];
     }
@@ -637,7 +639,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:(BOOL)[showUngroupedContactsButton state]] forKey:kABShowUngroupedContacts];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:(BOOL)[showBonjourContactsButton state]] forKey:kABShowBonjourContacts];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:(BOOL)[publishBonjourButton state]] forKey:kABPublishBonjourInfo];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:[mapAddressSiteButton indexOfSelectedItem]] forKey:kABMapAddressSite];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:[mapAddressSiteButton indexOfSelectedItem]] forKey:kABMapAddressSite];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:(BOOL)[sortModeMatrix selectedRow]] forKey:kABSortByLastName];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:(BOOL)[autoOpenNotesButton state]] forKey:kABAutoOpenNotes];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:(BOOL)[autoCloseAfterActionButton state]] forKey:kABAutoCloseAfterAction];
@@ -667,7 +669,7 @@
     [opacitySlider setFloatValue:[[NSUserDefaults standardUserDefaults] floatForKey:kABWindowOpacity]];
     [windowModeMatrix selectCellAtRow:(int)[[NSUserDefaults standardUserDefaults] boolForKey:kABUseHUDCardInterface] column:0];
     [showGroupRecordsButton setState:(int)[[NSUserDefaults standardUserDefaults] boolForKey:kABShowGroupSubmenus]];
-    [recentContactsField setIntValue:[[NSUserDefaults standardUserDefaults] integerForKey:kABNumRecentContacts]];
+    [recentContactsField setIntegerValue:[[NSUserDefaults standardUserDefaults] integerForKey:kABNumRecentContacts]];
     [publishBonjourButton setState:[[NSUserDefaults standardUserDefaults] boolForKey:kABPublishBonjourInfo]];
     [showBonjourContactsButton setState:[[NSUserDefaults standardUserDefaults] boolForKey:kABShowBonjourContacts]];
     [mapAddressSiteButton selectItemAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:kABMapAddressSite]];

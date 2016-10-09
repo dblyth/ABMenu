@@ -22,7 +22,7 @@
 -(BOOL)showAsPerson;
 -(BOOL)showAsCompany;
 
--(int)nameOrdering;
+-(NSInteger)nameOrdering;
 
 -(NSImage*)smallImage;
 

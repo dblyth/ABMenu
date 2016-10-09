@@ -74,5 +74,5 @@
 @end
 
 @interface ABMenuCardController (ContextualPopupMenu)
--(NSMenu *)tableView:(NSTableView *)aTableView menuForTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex;
+-(NSMenu *)tableView:(NSTableView *)aTableView menuForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex;
 @end

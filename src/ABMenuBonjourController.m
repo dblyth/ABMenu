@@ -237,7 +237,7 @@
             }
             
             uint8_t readBuffer[4096];
-            int amountRead = 0;
+            NSInteger amountRead = 0;
             NSInputStream * is = (NSInputStream *)aStream;
             amountRead = [is read:readBuffer maxLength:4096];
             [currentDownload appendBytes:readBuffer length:amountRead];
